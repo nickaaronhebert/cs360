@@ -1,0 +1,351 @@
+
+<html>
+	<head>
+  		<title>Nick Hebert's Resume</title>
+		  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+      <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+       
+      <!-- Include Date Range Picker -->
+      <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	</head>
+
+	<body>
+		<nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Nick Hebert's Resume</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="resume_pdf.html">Printable Resume</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Personal Projects
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="http://ec2-54-149-174-102.us-west-2.compute.amazonaws.com:3020/home_page.html">Family Organizer</a></li>
+              <li><a href="http://ec2-54-149-174-102.us-west-2.compute.amazonaws.com:3020/list.html">Shopping List</a></li>
+              <li><a href="/weather.html">Weather App</a></li> 
+              <li><a href="/ten.html">Ten Thousand Hours</a></li> 
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class = "active"><a href="/academic.html"><span class="glyphicon glyphicon-user"></span> Academic Summary</a></li>
+          <li><a href="/contact.html"><span class="glyphicon glyphicon-log-in"></span> Contact Me</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  <div class = "row">
+    <div class = "col-md-12">
+      <h1 style = "border-bottom: thin solid #000000;">Add a New Entry</h1>
+    </div>
+  </div>
+
+  <div class = "row">
+    <div class = "col-md-12">
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <span id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+              <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+              <span></span> <b class="caret"></b>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="sel1">Category:</label>
+          <select class="form-control" id="sel1">
+            <option>School Projects</option>
+            <option>Work Projects</option>
+            <option>Personal  Projects</option>
+            <option>Healthy Eating/Exercise</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel1">Programming Language:</label>
+          <select class="form-control" id="sel1">
+            <option>C++</option>
+            <option>Java</option>
+            <option>Ruby</option>
+            <option>Javascript</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel1">Hours Spent</label>
+          <select class="form-control" id="sel1">
+            <option>.50 Hours</option>
+            <option>1.00 Hours</option>
+            <option>1.50 Hours</option>
+            <option>2.00 Hours</option>
+            <option>2.50 Hours</option>
+            <option>3.00 Hours</option>
+            <option>3.50 Hours</option>
+            <option>4.00 Hours</option>
+            <option>4.50 Hours</option>
+            <option>5.00 Hours</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pwd">Notes:</label>
+          <input type="password" class="form-control" id="pwd">
+        </div>
+        <button type="submit" class="btn btn-default">Add A New Entry</button>
+      </form>
+    </div>
+  </div>
+
+  <div class = "row"> 
+    <div class = "col-md-12">
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+              School Projects</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <div class = "row"> 
+                <div class = "col-md-12">    
+                          <table class="table table-striped">
+                            <thead>
+                             <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Project Category</th>
+                                <th>Project Specific</th>
+                                <th>Hours Spent</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>School Project</td>
+                                <td>Lab 2 - Worked on architecture</td>
+                                <td>4.5</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>School Project</td>
+                                <td>Lab 2 - Worked on architecture</td>
+                                <td>4.5</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>School Project</td>
+                                <td>Lab 2 - Worked on architecture</td>
+                                <td>4.5</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>School Project</td>
+                                <td>Lab 2 - Worked on architecture</td>
+                                <td>4.5</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+              Work Projects</a>
+            </h4>
+          </div>
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class = "row"> 
+                <div class = "col-md-12">    
+                          <table class="table table-striped">
+                            <thead>
+                             <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Project Category</th>
+                                <th>Project Specific</th>
+                                <th>Hours Spent</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Work Projects</td>
+                                <td>Parser-Voya</td>
+                                <td>6</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Work Projects</td>
+                                <td>Parser-Voya</td>
+                                <td>6</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Work Projects</td>
+                                <td>Parser-Voya</td>
+                                <td>6</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Work Projects</td>
+                                <td>Parser-Voya</td>
+                                <td>6</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+              Personal Projects</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class = "row"> 
+                <div class = "col-md-12">    
+                          <table class="table table-striped">
+                            <thead>
+                             <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Project Category</th>
+                                <th>Project Specific</th>
+                                <th>Hours Spent</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Personal Project</td>
+                                <td>Working on Shopping Cart App</td>
+                                <td>3</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Personal Project</td>
+                                <td>Working on Shopping Cart App</td>
+                                <td>3</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Personal Project</td>
+                                <td>Working on Shopping Cart App</td>
+                                <td>3</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Personal Project</td>
+                                <td>Working on Shopping Cart App</td>
+                                <td>3</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+              Healthy Eating/Exercise</a>
+            </h4>
+          </div>
+          <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class = "row"> 
+                <div class = "col-md-12">    
+                          <table class="table table-striped">
+                            <thead>
+                             <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Project Category</th>
+                                <th>Project Specific</th>
+                                <th>Hours Spent</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Healthy Eating/Exercise</td>
+                                <td>Running - 2.5 miles</td>
+                                <td>1</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Healthy Eating/Exercise</td>
+                                <td>Running - 2.5 miles</td>
+                                <td>1</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Healthy Eating/Exercise</td>
+                                <td>Running - 2.5 miles</td>
+                                <td>1</td>
+                              </tr>
+                              <tr>
+                                <td>12/29/2015</td>
+                                <td>Healthy Eating/Exercise</td>
+                                <td>Running - 2.5 miles</td>
+                                <td>1</td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  
+
+  </body>
+<script type="text/javascript">
+$(function() {
+
+    function cb(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    }
+    cb(moment().subtract(29, 'days'), moment());
+
+    $('#reportrange').daterangepicker({
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+});
+</script>
+
+  </html>
