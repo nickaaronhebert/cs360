@@ -8,86 +8,201 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <ostream>
+#include <vector>
+#include "sample.cpp"
 
 #define SOCKET_ERROR        -1
-#define BUFFER_SIZE         100
+#define BUFFER_SIZE         512
 #define HOST_NAME_SIZE      255
+
+using namespace std;
+
+int download_header_html(int socket)
+{
+    int amount_read = 0;
+    unsigned nReadAmount;
+    int final_num = 0;
+    vector<char *> header_lines;
+    char pBuffer[BUFFER_SIZE];
+
+    GetHeaderLines(header_lines, socket, 0);
+    for (int i = 0; i < header_lines.size(); ++i)
+    {
+     cout <<endl<<header_lines[i];
+     if (strstr(header_lines[i],"Content-Length")!=NULL)
+     {
+        string content_string = string(header_lines[i]);
+        int content_location = content_string.find(":") + 2;
+        string num_string = content_string.substr(content_location, content_string.length());
+        cout << endl << num_string;
+        final_num = atoi(num_string.c_str());
+     }
+    }
+    while (amount_read < final_num)
+    {
+      nReadAmount=read(socket,pBuffer,1);
+      amount_read += nReadAmount;  
+      cout << pBuffer[0];
+    }
+}
 
 int  main(int argc, char* argv[])
 {
-	int Socket;                 /* handle to socket */
-    struct hostent* server;   /* holds info about a machine */
+	int hSocket;
+    vector<char *> header_lines;                 /* handle to socket */
+    struct hostent* pHostInfo;   /* holds info about a machine */
     struct sockaddr_in Address;  /* Internet socket address stuct */
     long nHostAddress;
     char pBuffer[BUFFER_SIZE];
-    unsigned nReadAmount;
+    unsigned int nReadAmount;
     char strHostName[HOST_NAME_SIZE];
     int nHostPort;
+    extern char * optarg;
+    int c, times_to_download = 1, err = 0;
+    bool debug = false;
+    bool html = true;
+    string page = "";
+    int final_num = 0;
+    int amount_read = 0;
+    
 
-    //Checking to see if we have enough arguments
-    if(argc < 3)
+ //    //Checking to see if we have enough arguments
+    if(argc > 6)
     {
-        printf("\nUsage: client host-name host-port\n");
+        printf("\nUsage: download host-name host-port -c or -d\n");
         return 0;
     }
     else
     {
-    	//Copying the arguments into the host name variable and passing  the host port number
-    	strcpy(strHostName, argv[1]);
-    	nHostPort=atoi(argv[2]);
-    }
-    //creating the socket.
-    Socket = socket(AF_INET, SOCK_STREAM, 0);
-    server = gethostbyname(strHostName);
-    if (server == NULL)
-    {
-    	printf("\nCould not connect to host \n");
-    	exit ( 0 );
-    }
-    //copying the address from the server struct into the HostAddress field
-    //memcpy(&nHostAddress,server->h_addr,server->h_length);
+        html = true;
+        debug = false;
+        while ( ( c = getopt(argc, argv, "c:d") ) != -1)
+        {
+            switch(c)
+            {
+              case 'c':
+                times_to_download = atoi(optarg);
+                cout << times_to_download;
+                html = false;
+                break;
+              case 'd':
+                debug = true;
+                html = true;
+                break;
+              case '?':
+                err = 1;
+                break;
+            }
+        }
+        strcpy(strHostName, argv[optind]);
+        page = argv[optind + 2];
+        nHostPort=atoi(argv[optind+1]);
+        
 
-    //setting Address to 0 
-    memset(&Address, 0, sizeof(Address));
-    memcpy((void*)&Address.sin_addr.s_addr, (const void*) server->h_addr, server->h_length);
-	
-	//where are these variables coming  from? They come from the netinet/in.h
-	Address.sin_port=htons(nHostPort);
+    }
+    /* make a socket */
+    hSocket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+    if(hSocket == SOCKET_ERROR)
+    {
+        printf("\nCould not make a socket\n");
+        return 0;
+    }
+
+    /* get IP address from name */
+    pHostInfo=gethostbyname(strHostName);
+    /* copy address into long */
+    memcpy(&nHostAddress,pHostInfo->h_addr,pHostInfo->h_length);
+
+    /* fill address struct */
     Address.sin_addr.s_addr=nHostAddress;
+    Address.sin_port=htons(nHostPort);
     Address.sin_family=AF_INET;
 
-    //calling connect
-    //socket is the name of my socket, casting Address into a sockaddr struct, and passing in the size of address
+    
 
-    if (connect (Socket, (struct sockaddr*) &Address, sizeof(Address)))
+    /* connect to host */
+    if(connect(hSocket,(struct sockaddr*)&Address,sizeof(Address)) 
+       == SOCKET_ERROR)
     {
-    	printf("\nCould not connect to host \n");
-    	return 0;
+        printf("\nCould not connect to host\n");
+        return 0;
     }
-    string path_to_file = "";
-    path_to_file = argv[3];
-    string request = "GET " + path_to_file + " HTTP/1.0\r\nHost: " + strHostName + "\r\n\r\n"
-    int n = write (Socket, request, strlen(request));
-    int buffer = 0;
 
-    string buffer = "";
+    #define MAXGET 1000
+    char * message = (char *)malloc(MAXGET);
+    sprintf(message, "GET %s HTTP/1.1\r\nHost:%s%u\r\n\r\n", page.c_str(), strHostName, nHostPort);
 
-    while (buffer.find("\r\n\r\n" == false)
+    int successes = 0;
+    if (debug == true)
     {
-    	printf("\nCool \n");
-    	n += read(socket, buffer, 255);
-    	buffer = "";
-    } 
+        write(hSocket, message, strlen(message));
+        download_header_html(hSocket);
+    }
+    else if (debug == false && html == true)
+    {
+        write(hSocket, message, strlen(message));
+        GetHeaderLines(header_lines, hSocket, 0);
+        for (int i = 0; i < header_lines.size(); ++i)
+        {
+         if (strstr(header_lines[i],"Content-Length")!=NULL)
+         {
+            string content_string = string(header_lines[i]);
+            int content_location = content_string.find(":") + 2;
+            string num_string = content_string.substr(content_location, content_string.length());
+            final_num = atoi(num_string.c_str());
+         }
+        }
+        while (amount_read < final_num)
+        {
+          nReadAmount=read(hSocket,pBuffer,1);
+          amount_read += nReadAmount;  
+          cout << pBuffer[0];
+        }
+    }
+    else 
+    {
+        write(hSocket, message, strlen(message));
+        GetHeaderLines(header_lines, hSocket, 0); 
+        for (int i = 0; i < header_lines.size(); ++i)
+        {
+            cout <<endl<<header_lines[i];
+        }
+        int download_tracker = 0;
+        cout << endl;
+        while (download_tracker < times_to_download)
+        {
+            //write(hSocket, message, strlen(message));
+            nReadAmount=read(hSocket,pBuffer,1);
+            if (nReadAmount > 0)
+            {
+                download_tracker++;
+            }
+            if(close(hSocket) == SOCKET_ERROR)
+            {
+                printf("\nCould not close socket\n");
+                return 0;
+            }
+            hSocket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+            if(hSocket == SOCKET_ERROR)
+            {
+                printf("\nCould not make a socket\n");
+                return 0;
+            }
+        }
+        cout << "The number of successfull downloads is: " << download_tracker;
+       
+    }
+            
+    printf("\nClosing socket\n");
+    /* close socket */                       
+    if(close(hSocket) == SOCKET_ERROR)
+    {
+        printf("\nCould not close socket\n");
+        return 0;
+    }
+    free(message); 
   }
-    
-
-
-
-
-
-    
-	
-	//setting the port number
 
 
 
